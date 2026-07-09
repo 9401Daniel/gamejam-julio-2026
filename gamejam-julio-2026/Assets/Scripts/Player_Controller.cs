@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerMovement : MonoBehaviour
+public class Player_Controller : MonoBehaviour
 {
     // Velocidad de movimiento del jugador (ajustable desde el Inspector)
     public float speed = 5f;
@@ -10,6 +10,11 @@ public class PlayerMovement : MonoBehaviour
     // En el Inspector, este campo se expande para configurar manualmente
     // los bindings (teclas) usando un "2D Vector Composite" (Up/Down/Left/Right).
     public InputAction moveAction;
+    private GameManager gameManager;
+
+    void Start(){
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+    }
 
     void OnEnable()
     {
@@ -61,5 +66,9 @@ public class PlayerMovement : MonoBehaviour
             rb.linearVelocity = Vector2.zero;
             rb.angularVelocity = 0f;
         }
+
+    if (collision.gameObject.CompareTag("Enemy")){
+        gameManager.RestarHP();
+    }
 }
 }
