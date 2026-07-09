@@ -3746,9 +3746,9 @@ TextureImporter:
       name: decorative_cracks_walls_163
       rect:
         serializedVersion: 2
-        x: 48
+        x: 52
         y: 176
-        width: 16
+        width: 9
         height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -3922,9 +3922,9 @@ TextureImporter:
       name: decorative_cracks_walls_171
       rect:
         serializedVersion: 2
-        x: 48
+        x: 52
         y: 160
-        width: 16
+        width: 9
         height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -4098,9 +4098,9 @@ TextureImporter:
       name: decorative_cracks_walls_179
       rect:
         serializedVersion: 2
-        x: 48
+        x: 52
         y: 144
-        width: 16
+        width: 9
         height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
