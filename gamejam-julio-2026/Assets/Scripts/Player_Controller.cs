@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
+using System.Collections.Generic;
 
 public class Player_Controller : MonoBehaviour
 {
@@ -11,9 +13,22 @@ public class Player_Controller : MonoBehaviour
     // los bindings (teclas) usando un "2D Vector Composite" (Up/Down/Left/Right).
     public InputAction moveAction;
     private GameManager gameManager;
+    private Enemy enemyManager;
+    private string powerup; 
+    public bool tieneAccion;
+    public bool crearPocion;
+    private bool starPowerup;
+    private bool hasCoolDown;
+    private int starDaño = 10;
+    public float abilityCoolDown;
+    public float starDuration;
 
     void Start(){
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        enemyManager = GameObject.Find("Bug").GetComponent<Enemy>();
+        starDuration = 2.0f;
+        tieneAccion = false;
+        hasCoolDown = false;
     }
 
     void OnEnable()
@@ -50,25 +65,80 @@ public class Player_Controller : MonoBehaviour
         // Time.deltaTime hace que el movimiento sea independiente de los FPS del juego,
         // para que se mueva a la misma velocidad sin importar qué tan rápido corra el juego.
         transform.position += (Vector3)input.normalized * speed * Time.deltaTime;
+
+        if(Input.GetKeyDown(KeyCode.Space) && tieneAccion)
+        {
+            Debug.Log("¿Que hara esto?");
+            UsarHabilidad();
+        }
+    }
+
+    private void UsarHabilidad(){
+        switch (powerup)
+        {
+            case "DASH":
+                if(!hasCoolDown){
+                    StartCoroutine("StarCooldown");
+                    StartCoroutine("PowerUpCooldown");
+                }
+                break;
+            case "BOOM":
+                break;
+            case "ENEMY":
+                break;
+            case "1UP":
+                break;
+            case "SPIT":
+                break;
+            case "TP":
+                break;
+        }
     }
 
 
     private void OnTriggerEnter2D(Collider2D collision)
-{
+    {
     // Detiene el movimiento del objeto cuando toca a otro sprite
     // Esto evita que lo atraviese basándote en la lógica de tus scripts de movimiento
-    Rigidbody2D rb = collision.GetComponent<Rigidbody2D>();
-    
+        Rigidbody2D rb = collision.GetComponent<Rigidbody2D>();
 
-    if (rb != null)
-        {
-            // Detiene el movimiento lineal y angular
-            rb.linearVelocity = Vector2.zero;
-            rb.angularVelocity = 0f;
-        }
 
-    if (collision.gameObject.CompareTag("Enemy")){
-        gameManager.RestarHP();
+        if (rb != null)
+            {
+                // Detiene el movimiento lineal y angular
+                rb.linearVelocity = Vector2.zero;
+                rb.angularVelocity = 0f;
+            }
+
+        
     }
-}
+
+    private void OnCollisionEnter2D(Collision2D collision){
+        if (collision.gameObject.CompareTag("Enemy") && starPowerup){
+            enemyManager.RecibirGolpe(starDaño);
+        } else{
+            gameManager.RestarHP();
+        }
+    }
+
+    //Se habilita la accion del jugador siempre y cuando cuente con 2 pociones
+    public void crearEfecto(){
+        if(crearPocion){
+            powerup=gameManager.MezclarPociones();
+            crearPocion = false;
+            tieneAccion = true;
+        }
+    }
+
+    IEnumerator StarCooldown(){
+        starPowerup=true;
+        yield return new WaitForSeconds(starDuration);
+        starPowerup=false;
+    }
+
+    IEnumerator PowerUpCooldown(){
+        hasCoolDown=true;
+        yield return new WaitForSeconds(abilityCoolDown);
+        hasCoolDown=false;
+    } 
 }

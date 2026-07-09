@@ -53,24 +53,32 @@ public class GameManager : MonoBehaviour
     }
 
     //Genera la accion del jugador a partir de las pociones en el inventario
-    private void MezclarPociones(){
+    public string MezclarPociones(){
         string combinacion = ""+pociones[0]+"+"+pociones[1];
+        string reaccion="";
         Debug.Log(combinacion);
         switch (combinacion)
         {
             case "roja+roja":
+                reaccion="BOOM";
                 break;
             case "roja+azul" or "azul+roja":
+                reaccion="DASH";
                 break;
             case "azul+azul":
+                reaccion = "ENEMY";
                 break;
             case "verde+verde":
+                reaccion="1UP";
                 break;
             case "verde+roja" or "roja+verde":
+                reaccion="SPIT";
                 break;
             case "verde+azul" or "azul+verde":
+                reaccion="TP";
                 break;
         }
+        return reaccion;
     }
 
     private void TerminarJuego(){
@@ -102,9 +110,8 @@ public class GameManager : MonoBehaviour
 
         }
         ultimaPocionRecogida = pocionReciente;
-        if (ValidarInventario())
-        {
-            
+        if(ValidarInventario()){
+            playerController.crearPocion = true;
         }
     }
 
