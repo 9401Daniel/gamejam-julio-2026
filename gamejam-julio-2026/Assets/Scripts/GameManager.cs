@@ -12,11 +12,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int ultimaPocionRecogida = 1;
     private bool gameOver = false;
     private int puntosSalud = 3;
+    private Player_Controller playerController;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         gameOver = false;
         puntosSalud = 3;
+        playerController = GameObject.Find("Player_Controller").GetComponent<Player_Controller>();
     }
 
     // Update is called once per frame
@@ -106,9 +108,4 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // Metodos para el script del jugador
-
-    public void Invencibilidad(){
-        if()
-    }
 }
