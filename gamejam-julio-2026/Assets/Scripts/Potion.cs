@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,6 +19,7 @@ public class Potion : MonoBehaviour
         
     }
 
+
     private void OnTriggerEnter2D(Collider2D other) {
         
          // Checa si el otro collider tiene un componente de controlador de jugador
@@ -28,4 +30,5 @@ public class Potion : MonoBehaviour
             gameManager.ActualizarPociones(colorPocion);
         }
     }
+
 }
