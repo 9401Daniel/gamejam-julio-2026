@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -8,6 +10,7 @@ public class Enemy : MonoBehaviour
     // Referencia al Transform del jugador, para saber hacia dónde moverse.
     // Se asigna una sola vez en Start(), no en cada frame, por eficiencia.
     private Transform player;
+    [SerializeField] private int puntosSalud = 5;
 
     void Start()
     {
@@ -30,5 +33,12 @@ public class Enemy : MonoBehaviour
 
         
 
+    }
+
+    public void RecibirGolpe(int daño){
+        puntosSalud -= daño;
+        if(puntosSalud <= 0){
+            Destroy(gameObject);
+        }
     }
 }
