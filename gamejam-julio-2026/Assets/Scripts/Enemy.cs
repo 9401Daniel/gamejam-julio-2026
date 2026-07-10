@@ -41,4 +41,8 @@ public class Enemy : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    public void Explosion(){
+        Destroy(gameObject);
+    }
 }

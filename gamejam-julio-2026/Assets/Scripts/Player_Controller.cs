@@ -14,14 +14,15 @@ public class Player_Controller : MonoBehaviour
     public InputAction moveAction;
     private GameManager gameManager;
     private Enemy enemyManager;
-    private string powerup; 
-    public bool tieneAccion;
+    private string powerup = "BOOM"; 
+    public bool tieneAccion = true;
     public bool crearPocion;
     private bool starPowerup;
     private bool hasCoolDown;
     private int starDaño = 10;
     public float abilityCoolDown;
     public float starDuration;
+    public Vector3 posInicial = new Vector3(-12,-6,0);
 
     void Start(){
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -83,14 +84,30 @@ public class Player_Controller : MonoBehaviour
                 }
                 break;
             case "BOOM":
+                if(!hasCoolDown){
+                    StartCoroutine("PowerUpCooldown");
+                    Explosion();
+                }
                 break;
             case "ENEMY":
                 break;
             case "1UP":
+                if(!hasCoolDown){
+                    StartCoroutine("PowerUpCooldown");
+                    VidaExtra();
+                }
                 break;
             case "SPIT":
+                if(!hasCoolDown){
+                    StartCoroutine("PowerUpCooldown");
+                    Debug.Log("Hola");
+                }
                 break;
             case "TP":
+                if(!hasCoolDown){
+                    StartCoroutine("PowerUpCooldown");
+                    Teleport();
+                }
                 break;
         }
     }
@@ -98,6 +115,7 @@ public class Player_Controller : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        Debug.Log("Se detecto un evento trigger");
     // Detiene el movimiento del objeto cuando toca a otro sprite
     // Esto evita que lo atraviese basándote en la lógica de tus scripts de movimiento
         Rigidbody2D rb = collision.GetComponent<Rigidbody2D>();
@@ -114,9 +132,12 @@ public class Player_Controller : MonoBehaviour
     }
 
     private void OnCollisionEnter2D(Collision2D collision){
+        Debug.Log("Choque con algo");
         if (collision.gameObject.CompareTag("Enemy") && starPowerup){
+            Debug.Log("Adios mounstruo");
             enemyManager.RecibirGolpe(starDaño);
         } else{
+            Debug.Log("Recibi daño");
             gameManager.RestarHP();
         }
     }
@@ -141,4 +162,23 @@ public class Player_Controller : MonoBehaviour
         yield return new WaitForSeconds(abilityCoolDown);
         hasCoolDown=false;
     } 
+
+    private void Explosion(){
+        gameManager.RestarHP();
+        gameManager.VaciarInventario();
+        enemyManager.Explosion();
+        transform.position = posInicial;
+    }
+
+    public void Teleport(){
+        transform.position = posInicial;
+    }
+
+    private void VidaExtra(){
+        gameManager.RestaurarHP();
+    }
+
+    public void InvocarEnemigo(){
+        gameManager.VaciarInventario();
+    }
 }

@@ -149,11 +149,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5329030622691295887, guid: bfd976f27f9a7bb4b98c0e6f23b329a7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.78
+      value: -12
       objectReference: {fileID: 0}
     - target: {fileID: 5329030622691295887, guid: bfd976f27f9a7bb4b98c0e6f23b329a7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.77
+      value: -6
       objectReference: {fileID: 0}
     - target: {fileID: 5329030622691295887, guid: bfd976f27f9a7bb4b98c0e6f23b329a7, type: 3}
       propertyPath: m_LocalPosition.z
@@ -268,6 +268,11 @@ MonoBehaviour:
       m_Action: Move
       m_Flags: 8
     m_Flags: 0
+  tieneAccion: 0
+  crearPocion: 0
+  abilityCoolDown: 0
+  starDuration: 0
+  posInicial: {x: -12, y: -6, z: 0}
 --- !u!61 &663231544
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -298,7 +303,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -492,6 +497,55 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Followplayer
   Doctor: {fileID: 663231539}
+--- !u!1 &956260963
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 956260965}
+  - component: {fileID: 956260964}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &956260964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 956260963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0845aa635b374013a7fe9ff2f35513a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  pociones:
+  - 
+  - 
+  ultimaPocionRecogida: 1
+  puntosSalud: 3
+--- !u!4 &956260965
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 956260963}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.53749, y: -2.2601, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1333356179
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -635,6 +689,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   speed: 3
+  puntosSalud: 5
 --- !u!1001 &1358546218
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -732,6 +787,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   speed: 3
+  puntosSalud: 5
 --- !u!61 &1358546224
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -875,6 +931,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   speed: 3
+  puntosSalud: 5
 --- !u!61 &1770648957
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1018,6 +1075,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   speed: 3
+  puntosSalud: 5
 --- !u!61 &1926883889
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -10386,3 +10444,4 @@ SceneRoots:
   - {fileID: 1358546218}
   - {fileID: 1770648951}
   - {fileID: 1333356179}
+  - {fileID: 956260965}
