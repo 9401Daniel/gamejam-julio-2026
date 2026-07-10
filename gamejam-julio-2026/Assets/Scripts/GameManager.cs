@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Unity.VisualScripting;
 
 
 public class GameManager : MonoBehaviour
@@ -21,6 +22,11 @@ public class GameManager : MonoBehaviour
     public Sprite pocimaRoja;
     public Sprite pocimaAzul;
     public Sprite pocimaVerde;
+
+    public GameObject canvasGameOver;
+
+    public GameObject canvasGamePlay;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -94,6 +100,9 @@ public class GameManager : MonoBehaviour
     }
 
     private void TerminarJuego(){
+        canvasGamePlay.SetActive(false);
+        canvasGameOver.SetActive(true);
+
         gameOver = true;
     }
 
@@ -203,6 +212,17 @@ public class GameManager : MonoBehaviour
             playerController.crearEfecto();
         }
         MostrarPociones();
+    }
+
+    public void ReturnMenu()
+    {
+        SceneManager.LoadScene("Menu");
+    }
+
+    public void ReturnPlayScene()
+    {
+        SceneManager.LoadScene("Play");
+        //SceneManager.GetActiveScene();
     }
 
 }

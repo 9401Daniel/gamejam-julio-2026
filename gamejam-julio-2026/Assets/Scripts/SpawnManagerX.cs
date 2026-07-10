@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System.Collections;
 
 public class SpawnManagerX : MonoBehaviour
 {
@@ -17,11 +18,15 @@ public class SpawnManagerX : MonoBehaviour
     public float baseSpeed = 3f;      // velocidad inicial del enemigo (ronda 1)
     public float speedBoost = 0.5f;   // Cuanto aumenta la velocidad por cada ronda
 
-    private int round = 1;
+    public int round = 1;
+
+    public int remplazo = 1;
+
+    public GameManager gameManager;
 
     void Start()
     {
-        SpawnEnemy();
+        SpawnEnemy(round);
         UpdateRoundText();
     }
 
@@ -32,23 +37,28 @@ public class SpawnManagerX : MonoBehaviour
         return new Vector2(xPos, yPos);
     }
 
-    void SpawnEnemy()
+    public void SpawnEnemy(int enemigos)
     {
-        GameObject newEnemy = Instantiate(enemyPrefab, GenerateSpawnPosition(), enemyPrefab.transform.rotation);
+        for (int n = 0; n < enemigos; n++)
+        {
+            Debug.Log("numero de enemigo: " + n);
+            GameObject newEnemy = Instantiate(enemyPrefab, GenerateSpawnPosition(), enemyPrefab.transform.rotation);
+        }
 
-        Enemy enemyController = newEnemy.GetComponent<Enemy>();
+        /*Enemy enemyController = newEnemy.GetComponent<Enemy>();
         if (enemyController != null)
         {
             enemyController.speed = baseSpeed + (speedBoost * (round - 1));
         }
+        */
     }
 
     public void OnPlayerHit()
     {
-        round++;
-        SpawnEnemy();
-        ResetPlayerPosition();
-        UpdateRoundText();
+        if (gameManager.gameOver == false)
+        {
+            StartCoroutine("IncrementoControlado");
+        }
     }
 
     void ResetPlayerPosition()
@@ -70,5 +80,17 @@ public class SpawnManagerX : MonoBehaviour
             int enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
             gameText.text = "Ronda " + round + " - Enemigos activos: " + enemyCount;
         }
+    }
+
+    IEnumerator IncrementoControlado()
+    {
+        Debug.Log(remplazo);
+        SpawnEnemy(remplazo);
+        ResetPlayerPosition();
+
+        yield return new WaitForSeconds(2.0f);
+
+        UpdateRoundText();
+        remplazo++;
     }
 }
