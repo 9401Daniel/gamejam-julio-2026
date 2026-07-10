@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
         gameOver = false;
         puntosSalud = 3;
         playerController = GameObject.Find("Player_Controller").GetComponent<Player_Controller>();
+
+        
     }
 
     // Update is called once per frame
