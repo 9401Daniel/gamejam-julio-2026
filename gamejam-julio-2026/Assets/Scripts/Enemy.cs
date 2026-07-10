@@ -15,8 +15,7 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         // Busca en la escena el GameObject que tenga el tag "Player" y guarda su Transform.
-        // IMPORTANTE: si el jugador no tiene ese tag asignado, esto lanza un
-        // NullReferenceException más adelante en Update().
+        // El jugador debe tener ese tag asignado.
         player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
