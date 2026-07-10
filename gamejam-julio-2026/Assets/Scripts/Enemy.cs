@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     // Velocidad de movimiento del enemigo (ajustable desde el Inspector)
-    public float speed = 3f;
+    public float speed = 1f;
 
     // Referencia al Transform del jugador, para saber hacia dónde moverse.
     // Se asigna una sola vez en Start(), no en cada frame, por eficiencia.

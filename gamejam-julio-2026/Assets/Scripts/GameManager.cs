@@ -16,12 +16,18 @@ public class GameManager : MonoBehaviour
     public Image corazonUno;
     public Image corazonDos;
     public Image corazonTres;
+    public Image primeraPocion;
+    public Image segundaPocion;
+    public Sprite pocimaRoja;
+    public Sprite pocimaAzul;
+    public Sprite pocimaVerde;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         gameOver = false;
         puntosSalud = 3;
         playerController = GameObject.Find("Doctor").GetComponent<Player_Controller>();
+        MostrarPociones();
     }
 
     // Update is called once per frame
@@ -55,6 +61,7 @@ public class GameManager : MonoBehaviour
         ultimaPocionRecogida = 1;
         playerController.tieneAccion=false;
         playerController.crearPocion=false;
+        MostrarPociones();
     }
 
     //Genera la accion del jugador a partir de las pociones en el inventario
@@ -134,6 +141,46 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void MostrarPociones(){
+        if(pociones[0]==""){
+            primeraPocion.gameObject.SetActive(false);
+        }else{
+            primeraPocion.gameObject.SetActive(true);
+            switch (pociones[0])
+            {
+                case "verde":
+                    primeraPocion.sprite = pocimaVerde;
+                    break;
+                case "roja":
+                    primeraPocion.sprite = pocimaRoja;
+                    break;
+                case "azul":
+                    primeraPocion.sprite = pocimaAzul;
+                    break;
+            }
+        }
+
+        if(pociones[1]==""){
+            segundaPocion.gameObject.SetActive(false);
+        }else{
+            segundaPocion.gameObject.SetActive(true);
+            switch (pociones[1])
+            {
+                case "verde":
+                    segundaPocion.sprite = pocimaVerde;
+                    break;
+                case "roja":
+                    segundaPocion.sprite = pocimaRoja;
+                    break;
+                case "azul":
+                    segundaPocion.sprite = pocimaAzul;
+                    break;
+            }
+        }
+
+        
+    } 
+
     //Gestiona las pociones del inventario
     public void ActualizarPociones(string pocionRecogida){
 
@@ -155,6 +202,7 @@ public class GameManager : MonoBehaviour
             playerController.crearPocion = true;
             playerController.crearEfecto();
         }
+        MostrarPociones();
     }
 
 }

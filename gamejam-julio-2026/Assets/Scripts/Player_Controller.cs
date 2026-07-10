@@ -15,6 +15,7 @@ public class Player_Controller : MonoBehaviour
     private GameManager gameManager;
     private Enemy enemyManager;
     public GameObject spitPrefab;
+    public GameObject enemigoPrefab;
     [SerializeField] public string powerup = "BOOM"; 
     public bool tieneAccion = true;
     public bool crearPocion;
@@ -97,6 +98,10 @@ public class Player_Controller : MonoBehaviour
                 }
                 break;
             case "ENEMY":
+                if(!hasCoolDown){
+                    StartCoroutine("PowerUpCooldown");
+                    CrearMonstruo();
+                }
                 break;
             case "1UP":
                 if(!hasCoolDown){
@@ -180,6 +185,11 @@ public class Player_Controller : MonoBehaviour
         gameManager.VaciarInventario();
         //enemyManager.Explosion();
         transform.position = posInicial;
+    }
+
+    private void CrearMonstruo(){
+        Instantiate(enemigoPrefab,trampillasCharco[0],enemigoPrefab.transform.rotation);
+        gameManager.VaciarInventario();
     }
 
     public void Teleport(){
