@@ -13,23 +13,31 @@ public class Player_Controller : MonoBehaviour
     // los bindings (teclas) usando un "2D Vector Composite" (Up/Down/Left/Right).
     public InputAction moveAction;
     private GameManager gameManager;
-    public SpawnManagerX spawnManager; // referencia al spawn manager, para avisarle cuando el jugador recibe daño
-    private string powerup = "BOOM"; 
+    private Enemy enemyManager;
+    public GameObject spitPrefab;
+    public GameObject enemigoPrefab;
+    [SerializeField] public string powerup = "BOOM"; 
     public bool tieneAccion = true;
     public bool crearPocion;
-    private bool starPowerup;
-    private bool hasCoolDown;
-    private int starDaño = 10;
+    [SerializeField] public bool starPowerup;
+    [SerializeField] public bool hasCoolDown;
+    public bool exploto = false;
     public float abilityCoolDown;
     public float starDuration;
+    public Vector3[] trampillasCharco = new Vector3[3];
     public Vector3 posInicial = new Vector3(-12,-6,0);
 
     void Start(){
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManagerX>();
         starDuration = 2.0f;
+        abilityCoolDown = 4.0f;
         tieneAccion = false;
         hasCoolDown = false;
+        trampillasCharco[0] = new Vector3(-11f,7f,0f);
+        trampillasCharco[1] = new Vector3(2.03f,7.05f,0f);
+        trampillasCharco[2] = new Vector3(15.05f,-0.98f,0f);
+        transform.position = posInicial;
     }
 
     void OnEnable()
@@ -87,6 +95,10 @@ public class Player_Controller : MonoBehaviour
                 }
                 break;
             case "ENEMY":
+                if(!hasCoolDown){
+                    StartCoroutine("PowerUpCooldown");
+                    CrearMonstruo();
+                }
                 break;
             case "1UP":
                 if(!hasCoolDown){
@@ -97,7 +109,7 @@ public class Player_Controller : MonoBehaviour
             case "SPIT":
                 if(!hasCoolDown){
                     StartCoroutine("PowerUpCooldown");
-                    Debug.Log("Hola");
+                    CrearCharco();
                 }
                 break;
             case "TP":
@@ -126,21 +138,11 @@ public class Player_Controller : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision){
         Debug.Log("Choque con algo");
-
-        // Solo reacciona si realmente chocó con algo etiquetado "Enemy".
-        if (collision.gameObject.CompareTag("Enemy")){
-
-            // Obtiene el componente Enemy directamente del objeto con el que se chocó
-            Enemy enemy = collision.gameObject.GetComponent<Enemy>();
-
-            if (starPowerup && enemy != null){
-                Debug.Log("Adios mounstruo");
-                enemy.RecibirGolpe(starDaño);
-            } else {
-                Debug.Log("Recibi daño");
-                gameManager.RestarHP();
-                spawnManager.OnPlayerHit(); // dispara nueva oleada y reposiciona al jugador
-            }
+        if (collision.gameObject.CompareTag("Enemy") && starPowerup){
+            Debug.Log("Adios mounstruo");
+        } else{
+            Debug.Log("Recibi daño");
+            gameManager.RestarHP();
         }
     }
 
@@ -165,10 +167,22 @@ public class Player_Controller : MonoBehaviour
         hasCoolDown=false;
     } 
 
+    IEnumerator BOOMCooldown(){
+        yield return new WaitForSeconds(1.0f);
+        exploto=false;
+    }
+
     private void Explosion(){
+        exploto=true;
         gameManager.RestarHP();
         gameManager.VaciarInventario();
+        //enemyManager.Explosion();
         transform.position = posInicial;
+    }
+
+    private void CrearMonstruo(){
+        Instantiate(enemigoPrefab,trampillasCharco[0],enemigoPrefab.transform.rotation);
+        gameManager.VaciarInventario();
     }
 
     public void Teleport(){
@@ -177,6 +191,13 @@ public class Player_Controller : MonoBehaviour
 
     private void VidaExtra(){
         gameManager.RestaurarHP();
+    }
+
+    private void CrearCharco(){
+        Instantiate(spitPrefab,trampillasCharco[0],spitPrefab.transform.rotation);
+        Instantiate(spitPrefab,trampillasCharco[1],spitPrefab.transform.rotation);
+        Instantiate(spitPrefab,trampillasCharco[2],spitPrefab.transform.rotation);
+
     }
 
     public void InvocarEnemigo(){
