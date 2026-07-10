@@ -508,21 +508,10 @@ MonoBehaviour:
       m_Action: Move
       m_Flags: 8
     m_Flags: 0
-  spitPrefab: {fileID: 7204293128431426498, guid: 3056b8b32b3aac845ac860c364f9b8f6, type: 3}
-  enemigoPrefab: {fileID: 8330152163584425140, guid: 84ce5bf3a884e304facd59f55b3a2e0c, type: 3}
-  powerup: BOOM
   tieneAccion: 0
   crearPocion: 0
-  starPowerup: 0
-  hasCoolDown: 0
-  exploto: 0
   abilityCoolDown: 0
   starDuration: 0
-  trampillasCharco:
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  posInicial: {x: -12, y: -6, z: 0}
 --- !u!61 &663231544
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -780,16 +769,6 @@ MonoBehaviour:
   - 
   - 
   ultimaPocionRecogida: 1
-  gameOver: 0
-  puntosSalud: 3
-  corazonUno: {fileID: 1538518299}
-  corazonDos: {fileID: 282349708}
-  corazonTres: {fileID: 2125368893}
-  primeraPocion: {fileID: 47823811}
-  segundaPocion: {fileID: 1019627143}
-  pocimaRoja: {fileID: 8320025121885212575, guid: 1cd9e3c4e5346324bb9ade8ba7175e8d, type: 3}
-  pocimaAzul: {fileID: -5385536641072663933, guid: 8b8a28522a5402049ac6bf28cae9aab9, type: 3}
-  pocimaVerde: {fileID: 6047062998020310423, guid: 598560e5469899448b7215db6a2b5a97, type: 3}
 --- !u!4 &956260965
 Transform:
   m_ObjectHideFlags: 0
@@ -1163,7 +1142,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1385790716
 MonoBehaviour:
   m_ObjectHideFlags: 0
