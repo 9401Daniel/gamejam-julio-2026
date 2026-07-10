@@ -11,14 +11,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] private string [] pociones = {"",""};
     [SerializeField] private int ultimaPocionRecogida = 1;
     private bool gameOver = false;
-    private int puntosSalud = 3;
+    [SerializeField] private int puntosSalud = 3;
     private Player_Controller playerController;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         gameOver = false;
         puntosSalud = 3;
-        playerController = GameObject.Find("Player_Controller").GetComponent<Player_Controller>();
+        playerController = GameObject.Find("Doctor").GetComponent<Player_Controller>();
     }
 
     // Update is called once per frame
@@ -50,6 +50,8 @@ public class GameManager : MonoBehaviour
         pociones[0] ="";
         pociones[1] ="";
         ultimaPocionRecogida = 1;
+        playerController.tieneAccion=false;
+        playerController.crearPocion=false;
     }
 
     //Genera la accion del jugador a partir de las pociones en el inventario
@@ -88,9 +90,17 @@ public class GameManager : MonoBehaviour
     // Resta un punto de salud al usuario
     public void RestarHP(){
         puntosSalud--;
+        playerController.Teleport();
         if(puntosSalud == 0){
             TerminarJuego();
         }
+    }
+
+    public void RestaurarHP(){
+        if(puntosSalud<3){
+            puntosSalud++;
+        }
+        VaciarInventario();
     }
 
     //Gestiona las pociones del inventario
