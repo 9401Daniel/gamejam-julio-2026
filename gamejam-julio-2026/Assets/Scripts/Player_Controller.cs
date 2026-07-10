@@ -23,6 +23,7 @@ public class Player_Controller : MonoBehaviour
     public bool exploto = false;
     public float abilityCoolDown;
     public float starDuration;
+    public Vector3[] trampillasCharco = new Vector3[3];
     public Vector3 posInicial = new Vector3(-12,-6,0);
 
     void Start(){
@@ -32,6 +33,10 @@ public class Player_Controller : MonoBehaviour
         abilityCoolDown = 4.0f;
         tieneAccion = false;
         hasCoolDown = false;
+        trampillasCharco[0] = new Vector3(-11f,7f,0f);
+        trampillasCharco[1] = new Vector3(2.03f,7.05f,0f);
+        trampillasCharco[2] = new Vector3(15.05f,-0.98f,0f);
+        transform.position = posInicial;
     }
 
     void OnEnable()
@@ -102,7 +107,7 @@ public class Player_Controller : MonoBehaviour
             case "SPIT":
                 if(!hasCoolDown){
                     StartCoroutine("PowerUpCooldown");
-                    StartCoroutine("SpitCooldown");
+                    CrearCharco();
                 }
                 break;
             case "TP":
@@ -169,11 +174,6 @@ public class Player_Controller : MonoBehaviour
         exploto=false;
     }
 
-    IEnumerator SpitCooldown(){
-        yield return new WaitForSeconds(1.0f);
-        CrearCharco();
-    } 
-
     private void Explosion(){
         exploto=true;
         gameManager.RestarHP();
@@ -191,7 +191,10 @@ public class Player_Controller : MonoBehaviour
     }
 
     private void CrearCharco(){
-        Instantiate(spitPrefab,transform.position,spitPrefab.transform.rotation);
+        Instantiate(spitPrefab,trampillasCharco[0],spitPrefab.transform.rotation);
+        Instantiate(spitPrefab,trampillasCharco[1],spitPrefab.transform.rotation);
+        Instantiate(spitPrefab,trampillasCharco[2],spitPrefab.transform.rotation);
+
     }
 
     public void InvocarEnemigo(){

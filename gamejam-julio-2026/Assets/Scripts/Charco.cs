@@ -22,7 +22,7 @@ public class Charco : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void OnTriggerEnter2D(Collider2D other) {
+    /*private void OnTriggerEnter2D(Collider2D other) {
         Debug.Log("¿Quien me piso?");
         Debug.Log("Tag: "+other.tag);
         Debug.Log(other.GetComponent<Enemy>());
@@ -33,5 +33,5 @@ public class Charco : MonoBehaviour
             Destroy(other.GetComponent<GameObject>());
         }
 
-    }
+    }*/
 }

@@ -13,6 +13,9 @@ public class GameManager : MonoBehaviour
     public bool gameOver = false;
     [SerializeField] private int puntosSalud = 3;
     private Player_Controller playerController;
+    public Image corazonUno;
+    public Image corazonDos;
+    public Image corazonTres;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -91,6 +94,7 @@ public class GameManager : MonoBehaviour
     public void RestarHP(){
         puntosSalud--;
         playerController.Teleport();
+        ActualizarCorazones();
         if(puntosSalud == 0){
             TerminarJuego();
         }
@@ -99,8 +103,35 @@ public class GameManager : MonoBehaviour
     public void RestaurarHP(){
         if(puntosSalud<3){
             puntosSalud++;
+            ActualizarCorazones();
         }
         VaciarInventario();
+    }
+
+    public void ActualizarCorazones(){
+        switch (puntosSalud)
+        {
+            case 3:
+                corazonUno.gameObject.SetActive(true);
+                corazonDos.gameObject.SetActive(true);
+                corazonTres.gameObject.SetActive(true);
+                break;
+            case 2:
+                corazonUno.gameObject.SetActive(true);
+                corazonDos.gameObject.SetActive(true);
+                corazonTres.gameObject.SetActive(false);
+                break;
+            case 1: 
+                corazonUno.gameObject.SetActive(true);
+                corazonDos.gameObject.SetActive(false);
+                corazonTres.gameObject.SetActive(false);
+                break;
+            default:
+                corazonUno.gameObject.SetActive(false);
+                corazonDos.gameObject.SetActive(false);
+                corazonTres.gameObject.SetActive(false);
+                break;
+        }
     }
 
     //Gestiona las pociones del inventario
