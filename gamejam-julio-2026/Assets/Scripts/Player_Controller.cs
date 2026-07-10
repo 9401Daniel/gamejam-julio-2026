@@ -14,12 +14,13 @@ public class Player_Controller : MonoBehaviour
     public InputAction moveAction;
     private GameManager gameManager;
     private Enemy enemyManager;
-    private string powerup = "BOOM"; 
+    public GameObject spitPrefab;
+    [SerializeField] public string powerup = "BOOM"; 
     public bool tieneAccion = true;
     public bool crearPocion;
-    private bool starPowerup;
-    private bool hasCoolDown;
-    private int starDaño = 10;
+    [SerializeField] public bool starPowerup;
+    [SerializeField] public bool hasCoolDown;
+    public bool exploto = false;
     public float abilityCoolDown;
     public float starDuration;
     public Vector3 posInicial = new Vector3(-12,-6,0);
@@ -28,6 +29,7 @@ public class Player_Controller : MonoBehaviour
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         enemyManager = GameObject.Find("Bug").GetComponent<Enemy>();
         starDuration = 2.0f;
+        abilityCoolDown = 4.0f;
         tieneAccion = false;
         hasCoolDown = false;
     }
@@ -100,7 +102,7 @@ public class Player_Controller : MonoBehaviour
             case "SPIT":
                 if(!hasCoolDown){
                     StartCoroutine("PowerUpCooldown");
-                    Debug.Log("Hola");
+                    StartCoroutine("SpitCooldown");
                 }
                 break;
             case "TP":
@@ -135,7 +137,6 @@ public class Player_Controller : MonoBehaviour
         Debug.Log("Choque con algo");
         if (collision.gameObject.CompareTag("Enemy") && starPowerup){
             Debug.Log("Adios mounstruo");
-            enemyManager.RecibirGolpe(starDaño);
         } else{
             Debug.Log("Recibi daño");
             gameManager.RestarHP();
@@ -163,10 +164,21 @@ public class Player_Controller : MonoBehaviour
         hasCoolDown=false;
     } 
 
+    IEnumerator BOOMCooldown(){
+        yield return new WaitForSeconds(1.0f);
+        exploto=false;
+    }
+
+    IEnumerator SpitCooldown(){
+        yield return new WaitForSeconds(1.0f);
+        CrearCharco();
+    } 
+
     private void Explosion(){
+        exploto=true;
         gameManager.RestarHP();
         gameManager.VaciarInventario();
-        enemyManager.Explosion();
+        //enemyManager.Explosion();
         transform.position = posInicial;
     }
 
@@ -176,6 +188,10 @@ public class Player_Controller : MonoBehaviour
 
     private void VidaExtra(){
         gameManager.RestaurarHP();
+    }
+
+    private void CrearCharco(){
+        Instantiate(spitPrefab,transform.position,spitPrefab.transform.rotation);
     }
 
     public void InvocarEnemigo(){

@@ -7,10 +7,12 @@ public class Potion : MonoBehaviour
 {
     public string colorPocion="";
     private GameManager gameManager;
+    private PotionSpawner potionSpawner;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        potionSpawner = GameObject.Find("PotionSpawner").GetComponent<PotionSpawner>();
     }
 
     // Update is called once per frame
@@ -26,9 +28,13 @@ public class Potion : MonoBehaviour
         if (other.GetComponent<Player_Controller>() != null) {
             
             // Destruye la pocion
+            Vector3 posicionPocima = gameObject.transform.position;
             Destroy(gameObject);
+            potionSpawner.LiberarPosicion(posicionPocima);
             gameManager.ActualizarPociones(colorPocion);
         }
     }
+
+
 
 }

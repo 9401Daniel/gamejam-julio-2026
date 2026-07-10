@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private string [] pociones = {"",""};
     [SerializeField] private int ultimaPocionRecogida = 1;
-    private bool gameOver = false;
+    public bool gameOver = false;
     [SerializeField] private int puntosSalud = 3;
     private Player_Controller playerController;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -122,6 +122,7 @@ public class GameManager : MonoBehaviour
         ultimaPocionRecogida = pocionReciente;
         if(ValidarInventario()){
             playerController.crearPocion = true;
+            playerController.crearEfecto();
         }
     }
 
