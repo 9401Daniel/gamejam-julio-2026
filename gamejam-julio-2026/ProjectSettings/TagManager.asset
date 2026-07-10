@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - Spit
+  - Pared
   layers:
   - Default
   - TransparentFX
